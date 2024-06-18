@@ -291,6 +291,14 @@ Java 빅데이터 개발자과정 Spring Boot 학습 리포지토리
 	5. /service/BoardService.java에 getBoard() 메서드 추가
 	6. /controller/BoardController.java에 /board/detail/{bno} 실행 메서드 작성
 	7. /templates/board/detail.html 생성
+	8. /templates/board/detail.html에 댓글영역 추가
+	9. /service/ReplyService.java 생성, 댓글 저장 메서드 작성
+	10. /controller/ReplyController.java 생성, /reply/create/{bno} 포스트매핑 메서드 작성
+	11. Bootstrap 적용
+		- 다운로드 후 프로젝트에 위치
+		- CDN 링크를 추가
+		- https://getbootstrap.com 다운로드 후 압축 해제
+		- bootstrap.min.css, bootstrap.min.js templates/static 에 위치
 
 
 
