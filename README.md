@@ -261,7 +261,22 @@ Java 빅데이터 개발자과정 Spring Boot 학습 리포지토리
 	13. /test/.../repository/BoardRepositoryTests.java 생성, 테스트 메서드 작성
 	14. 테스트 시작 > 웹 서버 실행 > h2-console 확인
 
+## 5일차
+- Tip 
+    - Java Test 중 OpenJDK 64-Bit Server VM warning: Sharing is 빨간색 경고가 뜨면
+    - Ctrl + ,(설정) > Java Test Config 검색 > settings.json 편집
+    ```json
+    "java.test.config": {
+        "vmArgs": [
+            "-Xshare:off"
+        ]
+    }
+    ```
+    -  저장 후 실행
 
+- Spring Boot JPA 프로젝트 개발 계속
+    15. JUnit 테스트로 CRUD 확인
+	16. 
 
 
 
