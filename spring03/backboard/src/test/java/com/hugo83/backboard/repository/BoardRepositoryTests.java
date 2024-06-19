@@ -3,6 +3,7 @@ package com.hugo83.backboard.repository;
 import java.util.List;
 import java.util.Optional;
 
+import com.hugo83.backboard.service.BoardService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,17 @@ public class BoardRepositoryTests {
     // JUnit 테스트
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private BoardService boardService;
+
+    @Test
+    void testHugeBoards() {
+        for (int i = 0; i < 300; i++) {
+            this.boardService.setBoard(String.format("테스트 데이터 - [%03d]", i+1),
+                                "별내용 없습니다.");
+        }
+    }
 
     @Test
     void testInsertBoard() {        

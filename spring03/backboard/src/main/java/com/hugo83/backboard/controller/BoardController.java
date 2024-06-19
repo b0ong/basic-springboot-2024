@@ -3,6 +3,7 @@ package com.hugo83.backboard.controller;
 import com.hugo83.backboard.entity.Board;
 import com.hugo83.backboard.service.BoardService;
 import com.hugo83.backboard.validation.BoardForm;
+import com.hugo83.backboard.validation.ReplyForm;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +30,9 @@ public class BoardController {
         return "board/list";    // templates/board/list.html 랜더링해서 리턴하라!
     }
 
+    // 댓글 검증을 추가하려면 매개변수로 ReplyForm을 전달!!
     @GetMapping("/detail/{bno}")
-    public String detail(Model model, @PathVariable("bno") Long bno) throws Exception {
+    public String detail(Model model, @PathVariable("bno") Long bno, ReplyForm replyForm) throws Exception {
         Board board = this.boardService.getBoard(bno);
         model.addAttribute("board", board);
         return "board/detail";
