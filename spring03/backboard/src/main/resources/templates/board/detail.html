@@ -1,13 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>게시판 상세</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
-</head>
-<body>
-    <div class="container my-3">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+    <div layout:fragment="main-content" class="container my-3">
         <!--게시글 영역-->
         <h2 th:text="${board.title}" class="border-bottom py-2"></h2>
         <div class="card text-bg-light my-3">
@@ -44,7 +37,4 @@
             </div>
         </form>
     </div>
-
-<script th:src="@{/bootstrap.min.js}"></script>
-</body>
 </html>

@@ -2,11 +2,12 @@ package com.hugo83.backboard.controller;
 
 import com.hugo83.backboard.entity.Board;
 import com.hugo83.backboard.service.BoardService;
+import com.hugo83.backboard.validation.BoardForm;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
-    
+
     private final BoardService boardService;    // 중간 열결책
 
     //    @RequestMapping("/list") // 아래와 동일
@@ -33,5 +34,21 @@ public class BoardController {
         Board board = this.boardService.getBoard(bno);
         model.addAttribute("board", board);
         return "board/detail";
+    }
+
+    @GetMapping("/create")
+    public String create(BoardForm boardForm) {
+        return "board/create";
+    }
+
+    @PostMapping("/create")
+    public String create(@Valid BoardForm boardForm,
+                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "board/create"; // 현재 html에 그대로 머무르기.
+        }
+//        this.boardService.setBoard(title, content);
+        this.boardService.setBoard(boardForm.getTitle(), boardForm.getContent());
+        return "redirect:/board/list";
     }
 }
