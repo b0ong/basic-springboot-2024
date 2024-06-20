@@ -15,24 +15,24 @@ import lombok.RequiredArgsConstructor;
 
 //import java.util.List;
 
+@RequiredArgsConstructor
 @RequestMapping("/board") // Restful URL은 /board로 시작
 @Controller
-@RequiredArgsConstructor
 public class BoardController {
 
-    private final BoardService boardService;    // 중간 열결책
+    private final BoardService boardService; // 중간 연결책
 
-    //    @RequestMapping("/list") // 아래와 동일
-    // Model -> controller에 있는 객체를 view로 보내주는 역할을 하는 객체
+    // @RequestMapping("/list", method=RequestMethod.GET) // 아래와 동일 기능
+    // Model -> controller에 있는 객체를 View로 보내주는 역할을 하는 객체
     @GetMapping("/list")
-    public String list(Model model , @RequestParam(value = "page", defaultValue = "0") int page) {
-//        List<Board> boardList = this.boardService.getList();
-//        model.addAttribute("boardList", boardList); // thymeleaf, mustache, jsp등 view로 보내는 기능!!
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        // List<Board> boardList = this.boardService.getList();
+        // model.addAttribute("boardList", boardList); // thymeleaf, mustache, jsp등 view로 보내는 기능!!!
 
         Page<Board> paging = this.boardService.getList(page);
-        model.addAttribute("paging", paging);   // 페이징된 보드를 view로 전달!
+        model.addAttribute("paging", paging); // 페이징된 보드를 view로 전달!
 
-        return "board/list";    // templates/board/list.html 랜더링해서 리턴하라!
+        return "board/list"; // templates/board/list.html 렌더링해서 리턴하라!
     }
 
     // 댓글 검증을 추가하려면 매개변수로 ReplyForm을 전달!!
@@ -54,8 +54,10 @@ public class BoardController {
         if (bindingResult.hasErrors()) {
             return "board/create"; // 현재 html에 그대로 머무르기.
         }
-//        this.boardService.setBoard(title, content);
+
+        // this.boardService.setBoard(title, content);
         this.boardService.setBoard(boardForm.getTitle(), boardForm.getContent());
         return "redirect:/board/list";
     }
+
 }
