@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.hugo83.backboard.common.NotFoundException;
+import com.hugo83.backboard.entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,19 +36,23 @@ public class BoardService {
         return this.boardRepository.findAll(pageable);
     }
 
-    public Board getBoard(Long bno) throws Exception {
+    public Board getBoard(Long bno) {
         Optional<Board> board = this.boardRepository.findById(bno);
         if (board.isPresent()) { // 데이터가 존재하면
             return board.get();
         } else {
-            throw new Exception("board not found");
+            throw new NotFoundException("board not found");
         }
     }
 
-    public void setBoard(String title, String content) {
+    //24.06.18 setBoard 작성(b0ong)
+    // 24.06.21 Member 추가
+    public void setBoard(String title, String content, Member writer) {
         // 빌더로 생성한 객체
         Board board = Board.builder().title(title).content(content)
                 .createDate(LocalDateTime.now()).build();
+
+        board.setWriter(writer);
 
         this.boardRepository.save(board);
     }
