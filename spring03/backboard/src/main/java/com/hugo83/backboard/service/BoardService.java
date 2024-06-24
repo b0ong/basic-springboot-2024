@@ -6,10 +6,13 @@ import java.util.Optional;
 
 import com.hugo83.backboard.common.NotFoundException;
 import com.hugo83.backboard.entity.Member;
+import com.hugo83.backboard.entity.Reply;
+import jakarta.persistence.criteria.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification; // 복합쿼리 생성용
 import org.springframework.stereotype.Service;
 
 import com.hugo83.backboard.entity.Board;
@@ -36,6 +39,16 @@ public class BoardService {
         return this.boardRepository.findAll(pageable);
     }
 
+    // 24.06.24 검색추가 메서드
+    public Page<Board> getList(int page, String keyword) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); // pageSize를 동적으로도 변경할 수 있음.나중에...
+
+        Specification<Board> spec = searchBoard(keyword);
+        return this.boardRepository.findAll(spec, pageable);
+    }
+
     public Board getBoard(Long bno) {
         Optional<Board> board = this.boardRepository.findById(bno);
         if (board.isPresent()) { // 데이터가 존재하면
@@ -54,6 +67,38 @@ public class BoardService {
 
         board.setWriter(writer);
 
-        this.boardRepository.save(board);
+        this.boardRepository.save(board);   // PK가 없으면 INSERT
+    }
+
+    // 24.06.24 modBoard 추가작성
+    public void modBoard(Board board, String title, String content) {
+        board.setTitle(title);
+        board.setContent(content);
+        board.setModifyDate(LocalDateTime.now());   // 수정된 일시 추가하려면
+
+        this.boardRepository.save(board);   // PK가 있으면 UPDATE
+    }
+
+    public void remBoard(Board board) {
+        this.boardRepository.delete(board); // 삭제 끝!
+    }
+
+    // 검색쿼리 대신 검색기능 생성
+    public Specification<Board> searchBoard(String keyword) {
+        return new Specification<Board>() {
+            private static final long serialVersionUID = 1L; // 필요한 값이라서 추가
+
+            @Override
+            public Predicate toPredicate(Root<Board> b, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                // query를 JPA로 생성
+                query.distinct(true); //중복 제거
+                Join<Board, Reply> r = b.join("replyList", JoinType.LEFT);
+
+                return cb.or(cb.like(b.get("title"), "%" + keyword + "%"), // 게시글 제목에서 검색
+                        cb.like(b.get("content"), "%" + keyword + "%"), // 게시글 내용에서 검색
+                        cb.like(r.get("content"), "%" + keyword + "%")  // 댓글 내용에서 검색
+                );
+            }
+        };
     }
 }

@@ -410,8 +410,46 @@ Java 빅데이터 개발자과정 Spring Boot 학습 리포지토리
 
 ## 9일차
 - Spring Boot JPA 프로젝트 개발 계속
-  - 수정, 삭제
-  - 앵커기능
+	1. 수정, 삭제 기능
+       - /entity/Board, Reply.java 수정일자 필드 추가
+       - /templates/board/detail.html 수정, 삭제버튼 추가
+         - sec:authorize="isAythenticated()" 없으면 500 에러
+       - /controller/BoardController.java modify() 메서드 작성
+       - /templates/board/create.html  form th:action을 삭제
+       	- crate.html 생성, 수정할 때 모두 사용 
+         - get이 /board/create 로 들어가면 post도 같은 URL로 실행되고, /board/modify/{bno}로 페이즈를 들어가면 post도 같은 url로 실행
+       - /service/BoardService.java 수정관련된 메서드 추가작성
+       - /controller/BoardController.java modify() POST 메서드 작성
+         - html에는 BoardForm 객체 값이 들어있음. Controller에 받아서 Board객체 다시 만들어 서비스로 전달
+       
+		- /service/BoardService.java 삭제관련 메서드 추가
+        - /controller/BoardController.java delete() GET 메서드 작성
+       
+        - /templates/board/detail.html 댓글 수정, 삭제버튼 추가
+        - /service/ReplyService.java 수정 삭제관련 메서드 추가
+        - /controller/ReplyController.java modify get, post메서드, 삭제 get 메서드 작성
+        - /templates/reply/modify.html 생성, 작성
+
+		- /templates/board/detail.html에 게시글, 댓글 수정날짜 표시
+  2. 앵커기능
+     - 추가, 수정, 삭제 시 이전 자신의 위치로 되돌아가는 기능
+     - /templates/board/detail.html 댓글마다 앵커링 추가
+     - /controller/ReplyController.java modify() Post매핑, return에 앵커링 추가
+	 - /service/ReplyService.java 생성메서드 void -> Reply 변경
+     - /controller/ReplyController.java creat Post메서드를 변경
+
+	 - /controller/BoardController.java detail() 메서드 수정
+
+  3. 검색 기능
+  	- /service/BoardService.java search() 메서드 추가
+    - /repository/BoardRepository.java findAll 메서드 추가
+    - /service/BoardService.java getList() 메서드 추가생성
+    - /controller/BoardController.java list() 메서드 추가
+    - /templates/board/list.html 검색창 추가, searchForm 폼영역 추가, **페이징영역 수정, JavaScript 추가**
+
+  4. 마크다운 적용
+     - 마크다운 뷰, 마크다운 에디터
+  
   - 마크다운 적용, 마크다운에디터 추가
   - 검색기능
   - 카테고리 추가(게시판, QnA, 공지사항)
