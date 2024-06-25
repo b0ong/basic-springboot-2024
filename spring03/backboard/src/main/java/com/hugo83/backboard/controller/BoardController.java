@@ -1,8 +1,10 @@
 package com.hugo83.backboard.controller;
 
 import com.hugo83.backboard.entity.Board;
+import com.hugo83.backboard.entity.Category;
 import com.hugo83.backboard.entity.Member;
 import com.hugo83.backboard.service.BoardService;
+import com.hugo83.backboard.service.CategoryService;
 import com.hugo83.backboard.service.MemberService;
 import com.hugo83.backboard.validation.BoardForm;
 import com.hugo83.backboard.validation.ReplyForm;
@@ -32,6 +34,7 @@ public class BoardController {
 
     private final BoardService boardService; // 중간 연결책
     private final MemberService memberService; // 사용자 정보
+    private final CategoryService categoryService;
 
     // @RequestMapping("/list", method=RequestMethod.GET) // 아래와 동일 기능
     // Model -> controller에 있는 객체를 View로 보내주는 역할을 하는 객체
@@ -53,6 +56,22 @@ public class BoardController {
         Page<Board> paging = this.boardService.getList(page, keyword);  // 검색추가
         model.addAttribute("paging", paging);
         model.addAttribute("kw", keyword);
+        return "board/list";
+    }
+
+    // 24.06.25 마지막 카테고리까지 추가
+    @GetMapping("/list/{category}")
+    public String list(Model model,
+                       @PathVariable(value = "category") String category,
+                       @RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "kw", defaultValue = "") String keyword) {
+
+        Category cate = this.categoryService.getCategory(category);
+        Page<Board> paging = this.boardService.getList(page, keyword, cate);  // 검색 및 카테고리 추가
+        model.addAttribute("paging", paging);
+        model.addAttribute("kw", keyword);
+        model.addAttribute("category", category);
+
         return "board/list";
     }
 
@@ -89,6 +108,8 @@ public class BoardController {
         this.boardService.setBoard(boardForm.getTitle(), boardForm.getContent(), writer);
         return "redirect:/board/list";
     }
+
+
 
     @PreAuthorize("isAuthenticated()") // 로그인시만 작성가능
     @GetMapping("/modify/{bno}")
@@ -131,5 +152,33 @@ public class BoardController {
         this.boardService.remBoard(board);// 삭제부분
 
         return "redirect:/";
+    }
+
+    // category 추가
+    @PreAuthorize("isAuthenticated()")  //로그인시만 작성가능
+    @GetMapping("/create/{category}")
+    public String create(Model model,
+                         @PathVariable("category") String category,
+                         BoardForm boardForm) {
+        return "board/create";
+    }
+
+    // category 추가
+    @PreAuthorize("isAuthenticated()")  //로그인시만 작성가능
+    @PostMapping("/create/{category}")
+    public String create(Model model,
+                         @PathVariable("category") String category,
+                         @Valid BoardForm boardForm,
+                         BindingResult bindingResult,
+                         Principal principal) {
+        if(bindingResult.hasErrors()){
+            model.addAttribute("category", category);
+            return "board/create"; // 현재 html에 그대로 머무르기
+        }
+        Member writer = memberService.getMember(principal.getName());   // 현재 로그인 사용자 아이디
+        // this.boardService.setBoard(title, content);
+        Category cate = this.categoryService.getCategory(category);
+        this.boardService.setBoard(boardForm.getTitle(), boardForm.getContent(), writer, cate);
+        return String.format("redirect:/board/list/%s", category);
     }
 }
