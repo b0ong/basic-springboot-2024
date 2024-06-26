@@ -9,6 +9,7 @@ import com.hugo83.backboard.entity.Category;
 import com.hugo83.backboard.entity.Member;
 import com.hugo83.backboard.entity.Reply;
 import jakarta.persistence.criteria.*;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -144,5 +145,22 @@ public class BoardService {
                 ));
             }
         };
+    }
+
+    // 조회수 증가 메서드
+    @Transactional // 조회하면서 업데이트하므로!
+    public Board hitBoard(Long bno) {
+        // Optional 기능 널체크
+        Optional<Board> oboard = this.boardRepository.findByBno(bno);
+
+        if (oboard.isPresent()) {
+            Board board = oboard.get();
+//            board.setHit(board.getHit() + 1); // 이대로 쓰면 에러발생
+            board.setHit(Optional.ofNullable(board.getHit()).orElse(0) + 1);
+
+            return board;
+        } else {
+            throw new NotFoundException("Board not found!");
+        }
     }
 }
