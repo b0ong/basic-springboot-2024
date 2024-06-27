@@ -616,7 +616,7 @@ Java 빅데이터 개발자과정 Spring Boot 학습 리포지토리
 		- application.properties 메일설정(네이버) 입력
 		- 네이버 메일 SMTP 설정 > 환경설정 > POP3/IMAP 설정
 
-		  <img src="https://raw.githubusercontent.com/bo0ng/basic-springboot-2024/main/images/sp011.png" width="730">
+		  <img src="https://raw.githubusercontent.com/b0ong/basic-springboot-2024/main/images/sp011.png" width="730">
 
 		- /config/SecurityConfig.java CSRF 설정 변경(!)
 		- /service/MailService.java 생성
