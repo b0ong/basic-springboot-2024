@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mail")
-public class MailController {
+public class RestMailController {
 
     private final MailService mailService;
 
