@@ -637,26 +637,33 @@ Java 빅데이터 개발자과정 Spring Boot 학습 리포지토리
         - /controller/MailController.java 생성, /mail/reset-mail GET매핑 메서드 생성
         - /service/MemberService.java에 메일주소로 검색하는 메서드  getMemberByEmail() 추가
         - /service/MailService.java에 메일전송 메서드 추가생성, 수정
-       		- UUID를 생성해서 메일로 전송하는 기능 추가
-        - /entity/Reset.java 생성
-       
-		- /repository/ResetRepository.java 생성
+			- UUID를 생성해서 메일로 전송하는 기능 추가
 
+		  <img src="https://raw.githubusercontent.com/b0ong/basic-springboot-2024/main/images/sp012.png" width="730">
 
-        - 로그인 화면에서 비밀번호 초기화 버튼, AJAX로 RestAPI로 메일보내기
-        - 메일에 링크 클릭
-        - http://localhost:8080/user/resetpassword (회원가입과 유사하게 개발)
+		- /entity/Reset.java 생성
+		- /repository/ResetRepository.java 인터페이스 생성, findByUuid() 추가 *
+		- /service/ResetService.java 생성 *
+		- /service/MailService.java에 ResetService 객체 생성, 메일전송 후 setReset() 사용 *
+		- /controller/MemberController.java, /member/reset-password Get메서드 작성 *
+		- /templates/member/newpassword.html 생성 *
+		- /controller/MemberController.java, /member/reset-password Post메서드 작성 *
+		- /service/MemberService.java에 setMember() 메서드 추가 *
 
-    2. 구글 로그인
-        - https://console.cloud.google.com/ 구글클라우드 콘솔
-        - 프로젝트 생성
-        - OAuth 동의화면 설정
-        - 개발 계속...
+		  <img src="https://raw.githubusercontent.com/b0ong/basic-springboot-2024/main/images/sp013.png" width="730">
 
-    - 리액트 적용
-    - 리액트로 프론트엔드 설정
-    - thymeleaf - 리액트로 변경
-    - Spring boot RestAPI 작업
+## 13일차
+- Spring Boot JPA 프로젝트 개발 계속
+	1. frontboard(React)
+
+	2. backboard(Rest API)
+
+	3. 구글 로그인
+		- https://console.cloud.google.com/ 구글클라우드 콘솔
+		- 프로젝트 생성
+		- OAuth 동의화면 설정
+		- 개발 계속...
+
 
 ## 계속
 - Spring Boot JPA 프로젝트

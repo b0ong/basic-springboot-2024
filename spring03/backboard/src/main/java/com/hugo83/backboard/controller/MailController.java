@@ -33,7 +33,7 @@ public class MailController {
             Member member = this.memberService.getMemberByEmail(email);
 
             // 메일 전송
-            Boolean result = this.mailService.sendResetPasswordEmail(member.getEmail());
+            Boolean result = this.mailService.sendResetPaswordEmail(member.getEmail());
 
             if(result) {
                 log.info("▶▶▶▶▶ Reset Mail Transfer Success ◀◀◀◀");
