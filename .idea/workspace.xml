@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1cb5a0d-ad15-49e1-826b-b983fa3a0b06" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react01/basic-app/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react01/basic-app/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react01/basic-app/src/component/CustomButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/react01/basic-app/src/component/CustomButton.js" afterDir="false" />
-    </list>
+    <list default="true" id="c1cb5a0d-ad15-49e1-826b-b983fa3a0b06" name="변경" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -71,7 +66,7 @@
       <workItem from="1718842083311" duration="32000" />
       <workItem from="1718929033003" duration="22000" />
       <workItem from="1719795992060" duration="14000" />
-      <workItem from="1719799562216" duration="11850000" />
+      <workItem from="1719799562216" duration="13301000" />
     </task>
     <servers />
   </component>
