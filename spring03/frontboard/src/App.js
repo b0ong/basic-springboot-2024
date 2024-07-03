@@ -11,6 +11,7 @@ import Home from './routes/Home';
 import BoardList from "./routes/BoardList";
 import QnaList from "./routes/QnaList";
 import Login from './routes/Login';
+import BoardDetail from "./routes/BoardDetail"; // 게시글 상세 추가
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Route path='/boardList' element={<BoardList/>}/>
       <Route path='/qnaList' element={<QnaList/>}/>
       <Route path='/login' element={<Login/>}/>
+        <Route path='/boardDetail/:bno' element={<BoardDetail/>}/>
     </Routes>
   );
 }
